@@ -55,8 +55,6 @@ class DoublyLinkedList:
 
     #add (insert) a node object at the head, if the key doesn't already exist.Return new node, or Null if already exists
     def add(self, key):
-        
-    
         node = None
         isAlreadyExists = self.is_element(key)
         if not(isAlreadyExists):
@@ -68,19 +66,10 @@ class DoublyLinkedList:
                 node.set_next(self.head)
                 self.head.set_prev(node)
                 
-                
             node.set_prev(None)
-            self.head = node
-            
-            
-            
+            self.head = node    
         return node
-        
-        
-        # node = NodeSinglyLinkedList(key)
-        # node.nxt = self.head
-        # self.head = node
-        
+               
         
     
     #use is_element to find node to remove. Return removed node, or Null if not found
