@@ -18,10 +18,11 @@
 
 
 
-class NodeSinglyLinkedList:
+class NodeDoublyLinkedList:
         
     def __init__(self, key = 0):
         self.key = key
+        self.prv = None
         self.nxt = None
     
     
@@ -37,43 +38,87 @@ class NodeSinglyLinkedList:
     def set_next(self, nxt):
         self.nxt = nxt
         
+    def get_prev(self):
+        return (self.prv)
         
-class SinglyLinkedList:
+    def set_prev(self, prv):
+        self.prv = prv
+        
+        
+class DoublyLinkedList:
         
     def __init__(self):
         self.head = None
         print("hello")
 
+
+
+    #add (insert) a node object at the head, if the key doesn't already exist.Return new node, or Null if already exists
+    def add(self, key):
+        
+    
+        node = None
+        isAlreadyExists = self.is_element(key)
+        if not(isAlreadyExists):
+            node = NodeDoublyLinkedList(key)
+            
+            if self.set_empty():
+                node.set_next(None)
+            else:
+                node.set_next(self.head)
+                self.head.set_prev(node)
+                
+                
+            node.set_prev(None)
+            self.head = node
+            
+            
+            
+        return node
         
         
+        # node = NodeSinglyLinkedList(key)
+        # node.nxt = self.head
+        # self.head = node
+        
+        
+    
+    #use is_element to find node to remove. Return removed node, or Null if not found
+    def remove(self, key):
+        node = self.is_element(key)
+        if node:
+            nextNode = node.get_next()
+            prevNode = node.get_prev()
+            nextNode.set_prev(prevNode)
+            prevNode.set_next(nextNode)
+        return node
+        
+
+    #search for a given key in the linked list, returns the node if found, None if not found
+    def is_element(self,key):
+        node = self.head
+        while node != None and node.get_key() != key:
+            node = node.get_next()
+        return node    
+    
+    
     # checks if linked list is empty
-    def empty(self):
+    def set_empty(self):
         if self.head == None:
             return True
         else:
             return False
 
-    #inserts a node object of type NodeSinglyLinkedList at the head of the list
-    def insert_head(self, key):
-        node = NodeSinglyLinkedList(key)
-        node.nxt = self.head
-        self.head = node
-
-    #search for a given key in the linked list, returns the node if found, None if not found
-    def search_key(self,key):
-        node = self.head
-        while node != None and node.get_key() != key:
-            node = node.get_next()
-        return node    
 
     #returns the number of nodes in the linked list
-    def size(self):
+    def set_size(self):
         node = self.head
         count = 0
         while node != None:
             count += 1
             node = node.get_next()
         return (count)
+
 
     #iterate through the entire linked list and print all keys
     def print_all_keys(self):
@@ -83,25 +128,35 @@ class SinglyLinkedList:
             print(key)
             node = node.get_next()
         
+
+
+
     
-list = SinglyLinkedList()
-print(list.empty())
-list.insert_head(6)
-list.insert_head(7)
-list.insert_head(61)
-list.insert_head(620)
-list.insert_head(6)
+list = DoublyLinkedList()
+print(list.set_empty())
+print('Adding 6:' + str(list.add(6).get_key()))
+print('Adding 7:' + str(list.add(7).get_key()))
+print('Adding 61:' + str(list.add(61).get_key()))
+print('Adding 620:' + str(list.add(620).get_key()))
+print('Adding 6:' + str(list.add(6)))
 
 print("Searching for 6")
-foundkey = list.search_key(6)
+foundkey = list.is_element(6)
+if foundkey:
+    print(foundkey.key)
+else:
+    print("Not found!")
+    
+print("Searching for 8")
+foundkey = list.is_element(8)
 if foundkey:
     print(foundkey.key)
 else:
     print("Not found!")
 
-print("Size: " + str(list.size()))
+print("Size: " + str(list.set_size()))
 list.print_all_keys()
-print(list.empty())
+print(list.set_empty())
 
 
 
