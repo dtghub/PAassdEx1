@@ -1,5 +1,5 @@
 
-
+NEED TO MAKE SURE I'VE USED SNAKE_CASE AND NOT CAMEL!!!
 
 
 
@@ -16,7 +16,7 @@ def sanitize_word(word):
     return(newword)
 
 
-regex?
+regex? x
 
 definition of a non-ascii character - e.g. any char with a code >128?
 
@@ -24,7 +24,7 @@ just loop linearly through the word, adding all ascii chars to newword
 
 ============================
 
-
+DONE NOT CHECKED
 def parse_line(line):
     """    
     Parses a given line, 
@@ -39,10 +39,21 @@ def parse_line(line):
     return(list_of_words)
 
 
+split() string into a list
+
+strip() each entry to remove any leading and trailing spaces
 
 
 
 
 
 ======================================
+
+
+
+
+
+
+
+
 

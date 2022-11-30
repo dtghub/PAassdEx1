@@ -67,12 +67,12 @@ def sanitize_word(word):
     Removes all non ascii characters from a given word
     """    
     newword = ""
-    wordLen = len(word)
+    word_len = len(word)
     
-    for i in range(wordLen):
-        charToCheck = word[i]
-        if ord(charToCheck) < 128:
-            newword += charToCheck
+    for i in range(word_len):
+        char_to_check = word[i]
+        if ord(char_to_check) < 128:
+            newword += char_to_check
             
     return(newword)
 
@@ -87,7 +87,14 @@ def parse_line(line):
     
     """    
     
-    <YOUR-CODE-HERE>
+    list_of_words = []
+    split_line = line.split()
+    
+    for word_to_add in split_line:
+        stripped_word = word_to_add.strip()
+        sanitised_word = sanitize_word(stripped_word)
+        list_of_words.append(sanitised_word)
+    
     return(list_of_words)
 
 #%%----------------------------------------------------------------------------
