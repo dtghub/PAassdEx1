@@ -67,7 +67,13 @@ def sanitize_word(word):
     Removes all non ascii characters from a given word
     """    
     newword = ""
-    <YOUR-CODE-HERE>
+    wordLen = len(word)
+    
+    for i in range(wordLen):
+        charToCheck = word[i]
+        if ord(charToCheck) < 128:
+            newword += charToCheck
+            
     return(newword)
 
 #%%----------------------------------------------------------------------------

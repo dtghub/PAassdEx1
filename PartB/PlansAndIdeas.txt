@@ -3,6 +3,46 @@
 
 
 
+==========================
+
+DONE NOT CHECKED
+
+def sanitize_word(word):
+    """
+    Removes all non ascii characters from a given word
+    """    
+    newword = ""
+    <YOUR-CODE-HERE>
+    return(newword)
 
 
+regex?
+
+definition of a non-ascii character - e.g. any char with a code >128?
+
+just loop linearly through the word, adding all ascii chars to newword
+
+============================
+
+
+def parse_line(line):
+    """    
+    Parses a given line, 
+    removes whitespaces, splits into list of sanitize words
+    Uses sanitize_word()
+    
+    HINT: Consider using the "strip()" and "split()" function here
+    
+    """    
+    
+    <YOUR-CODE-HERE>
+    return(list_of_words)
+
+
+
+
+
+
+
+======================================
 
