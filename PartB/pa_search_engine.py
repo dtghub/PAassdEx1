@@ -92,6 +92,7 @@ def parse_line(line):
     split_up_line = line.split()
     
     for word_to_add in split_up_line:
+        # these methods could be chained into one line, but I've left them separate for code readability/maintainability - check timings and briefly mention in report
         lowercase_word = word_to_add.lower()
         # stripped_word = word_to_add.strip() check if this step improves the timing?
         sanitised_word = sanitize_word(lowercase_word)

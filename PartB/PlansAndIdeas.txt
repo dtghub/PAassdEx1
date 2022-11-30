@@ -104,12 +104,31 @@ forward_index:
 
 
 
+For the data structure; python sets seem to be the best way to do the querying, but a requirement is to be able to dump the data in a textfile. I _think_ working with sets and employing  a routine to parse the file into a set, and to save the text file still meets the spec?
+
+Has the advantage that a set will only allow 1 copy of each word
+
+SOoo... for forward_index - use the following file format for the txt file
+
+name_of_file.txt: item1 item2
+
+Split by filename using an eol delimiter, ';'(?), then split to take filename using the colon character, then import into a set using split on whitespace
+
+2 options - read the text files back and populate a binary search tree
+or - investigate, can we store the data in the text files in a useful sorted format?
+
+!!!!!!!Start by generating unsorted text files, and go from there!!!!!!
 
 
+The forward_index is just a version of term_freq without the frequencies - so that can be created from the term-term_freq
+Similarly for invert_index and doc_rank?
 
 
+OK - so start with term_freq. start reading through a file and add each word to a BST - when get to each word in the source doc we check if it already exists, and add it or update date it's frequency count.
 
+NOOOOO - the moodle examples in Unit 3 (8.1.4) talk about (actually they suggest!!!) using the Python Set function - so we can just add each item to a set, - can we use sets to enumerate the members?
 
+When done we can just make a copy of term_freq, stripping out the frequency data
 
 
 
