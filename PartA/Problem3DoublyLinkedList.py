@@ -18,6 +18,14 @@
 
 
 
+#I think this is what is expected for arrays (of size N) - need to check!!!!
+
+N = 1000
+import array as arr
+myarray = arr.array('i', [0] * N)
+
+
+
 class NodeDoublyLinkedList:
         
     def __init__(self, key = 0):
@@ -44,7 +52,7 @@ class NodeDoublyLinkedList:
     def set_prev(self, prv):
         self.prv = prv
         
-        
+# This is the ADT - shoul;d rename it as such        
 class DoublyLinkedList:
         
     def __init__(self):
