@@ -53,6 +53,70 @@ strip() each entry to remove any leading and trailing spaces
 
 
 
+def index_file  (filename
+                ,filepath
+                ,forward_index
+                ,invert_index
+                ,term_freq
+                ,doc_rank
+                ):
+    """    
+    Given a file, indexes it by calculating its:
+        forward_index
+        term_freq
+        doc_rank
+    and updates the global invert_index
+    """
+    start = timer()
+    with open(filepath, 'r', encoding="utf-8") as f:
+    
+    <YOUR-CODE-HERE>           
+    
+    end = timer()
+    print("Time taken to index file: ", filename, " = ", end-start)
+
+
+
+
+Given a file, indexes it by calculating its:
+    forward_index
+    term_freq
+    doc_rank
+
+
+
+and updates the global invert_index
+
+
+While you are reading in the files to create the indices though, you will have to be careful about cleaning up the text to remove special characters and white spaces, and also deal with case sensitivity (recall, the search engine is meant to be case insensitive).
+
+You should use appropriate data structures to store each of these four crucial variables.
+
+forward_index:
+
+    i.Forward Index. This index associates all documents with the associated words.
+    E.g.
+    ii.anna_karenina.txt: 'the', 'project', 'gutenberg', 'ebook', ...
+    second.txt: 'why', 'said', 'the', 'old', ...
+    ...
+    war_and_peace.txt: 'the', 'project', 'gutenberg', 'ebook', ...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

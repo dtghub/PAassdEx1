@@ -71,7 +71,8 @@ def sanitize_word(word):
     
     for i in range(word_len):
         char_to_check = word[i]
-        if ord(char_to_check) < 128:
+        char_num = ord(char_to_check)
+        if char_num > 96 and char_num < 123:
             newword += char_to_check
             
     return(newword)
@@ -88,11 +89,12 @@ def parse_line(line):
     """    
     
     list_of_words = []
-    split_line = line.split()
+    split_up_line = line.split()
     
-    for word_to_add in split_line:
-        stripped_word = word_to_add.strip()
-        sanitised_word = sanitize_word(stripped_word)
+    for word_to_add in split_up_line:
+        lowercase_word = word_to_add.lower()
+        # stripped_word = word_to_add.strip() check if this step improves the timing?
+        sanitised_word = sanitize_word(lowercase_word)
         list_of_words.append(sanitised_word)
     
     return(list_of_words)
