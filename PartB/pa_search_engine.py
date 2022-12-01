@@ -118,7 +118,29 @@ def index_file  (filename
     start = timer()
     with open(filepath, 'r', encoding="utf-8") as f:
     
-    <YOUR-CODE-HERE>           
+    # <YOUR-CODE-HERE>      
+
+        # create a list and a set of words from the text file
+        file_content = f.readlines()
+        list_of_words = parse_line(file_content)
+        set_of_words = set(list_of_words)
+        
+        # add the set of unique words to forward_index
+        forward_index[filename] = list(set_of_words)
+        
+        # create an entry in term_freq
+        
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        
     
     end = timer()
     print("Time taken to index file: ", filename, " = ", end-start)
