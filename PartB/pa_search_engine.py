@@ -106,6 +106,7 @@ def index_file  (filename
                 ,forward_index
                 ,invert_index
                 ,term_freq
+                ,inv_doc_freq
                 ,doc_rank
                 ):
     """    
@@ -124,6 +125,10 @@ def index_file  (filename
         file_content = f.readlines()
         list_of_words = parse_line(file_content)
         set_of_words = set(list_of_words)
+        
+        
+        # record the size of the file and record this ad the document rank in doc_rank
+        doc_rank[filename] = len(file_content)
         
         # add the set of unique words to forward_index
         forward_index[filename] = list(set_of_words)
@@ -147,6 +152,19 @@ def index_file  (filename
             if not(filename) in invert_index[word]:
                 invert_index[word].append(filename)
         
+        
+        
+        
+        # Inverse document frequency (IDF): This is a metric calculated for each unique word encountered, across all documents. It has values between 0 and 1, and is calculated as follows: IDF(word) = Number of documents with word / Total numnber of documents
+        
+        # use invert_index
+        
+        total_num_docs = len(invert_index)
+        
+        for word in invert_index:
+            doc_count = len(invert_index[word])
+            word_index = doc_count / total_num_docs
+            inv_doc_freq[word] = word_index
         
         
         

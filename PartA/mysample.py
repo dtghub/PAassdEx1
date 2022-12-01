@@ -66,6 +66,15 @@ print("\nFreq:\n")
 print(frequency_of_words)
 print("\n")
 
+test_embed_in_dict = {}
+test_embed_in_dict[filename] = frequency_of_words
+filename1 = "myFilename1"
+test_embed_in_dict[filename1] = frequency_of_words
+
+print("\nTestFreq:" + str(test_embed_in_dict)+ "\n")
+
+print("\nFileLen:" + str(len(filename))+ "\n")
+
 # invert_index[filename] = []
 for word in set_of_words:
     if not(word) in invert_index:
@@ -98,7 +107,16 @@ for word in set_of_words:
 
 print(invert_index)
 
+inv_doc_freq = {}
+total_num_docs = len(invert_index)
 
+for word in invert_index:
+    doc_count = len(invert_index[word])
+    word_index = doc_count / total_num_docs
+    inv_doc_freq[word] = word_index
+print("\nInvDocFreq")
+print(inv_doc_freq)
+print("\n")
 
 if not('frog' in b):
     b['frog'] = {}
