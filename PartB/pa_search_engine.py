@@ -130,10 +130,11 @@ def index_file  (filename
         
         # create an entry in term_freq
         # make a dict of key:values for word:frequency_count
+        total_number_of_words = len(list_of_words)
         frequency_of_words = {}
         for word in set_of_words:
             frequency_count = list_of_words.count(word)
-            frequency_of_words[word] = frequency_count
+            frequency_of_words[word] = frequency_count / total_number_of_words
             
         # store this new dict in the term_freq dict
         term_freq[filename] = frequency_of_words

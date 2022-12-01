@@ -46,7 +46,7 @@ filename = "myFilename"
 set_of_words = {"apple", "banana", "cherry"}
 
 set_of_words2 = {"apple", "banana", "cherry","apple", "banana", "cherry", "orange", "cherry", "pear", "slug"}
-list_of_words = ["apple", "banana", "cherry","apple", "banana", "cherry", "orange", "cherry", "pear", "slug"]
+list_of_words = ["apple", "banana", "cherry","apple", "banana", "cherry", "orange", "cherry", "pear", "slug","thrush"]
 
 
 set_to_test = set(list_of_words)
@@ -55,12 +55,13 @@ print("\nSet:\n")
 print(list_to_test)
 print("\n")
 
-
+total_number_of_words = len(list_of_words)
+print("tot wrds:" + str(total_number_of_words))
 
 frequency_of_words = {}
 for word in set_of_words2:
     frequency_count = list_of_words.count(word)
-    frequency_of_words[word] = frequency_count
+    frequency_of_words[word] = frequency_count / total_number_of_words
 print("\nFreq:\n")
 print(frequency_of_words)
 print("\n")
