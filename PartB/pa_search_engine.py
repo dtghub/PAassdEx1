@@ -118,7 +118,7 @@ def index_file  (filename
     start = timer()
     with open(filepath, 'r', encoding="utf-8") as f:
     
-    # <YOUR-CODE-HERE>      
+        # <YOUR-CODE-HERE>      
 
         # create a list and a set of words from the text file
         file_content = f.readlines()
@@ -137,6 +137,19 @@ def index_file  (filename
             
         # store this new dict in the term_freq dict
         term_freq[filename] = frequency_of_words
+        
+        
+        # now add the words from set_of_words to invert_index
+        for word in set_of_words:
+            if not(word) in invert_index:
+                invert_index[word] = []
+            if not(filename) in invert_index[word]:
+                invert_index[word].append(filename)
+        
+        
+        
+        
+        
     
     
     
