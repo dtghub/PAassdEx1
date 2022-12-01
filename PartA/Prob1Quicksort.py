@@ -3,7 +3,7 @@
 
 
 
-def QSpartition(A,start, end):
+def QSpartition(A, start, end):
     x = A[end]
     lrbi = start - 1
     for ti in range(start, end):
@@ -15,11 +15,11 @@ def QSpartition(A,start, end):
 
 
 
-def QSquicksort(A,start,end):
+def QSquicksort(A, start, end):
     if start < end:
-        pivot = QSpartition(A,start,end)
-        QSquicksort(A,start,pivot - 1)
-        QSquicksort(A,pivot + 1,end)
+        pivot = QSpartition(A, start, end)
+        QSquicksort(A, start, pivot - 1)
+        QSquicksort(A, pivot + 1, end)
 
 
 
