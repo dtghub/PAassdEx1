@@ -123,6 +123,15 @@ or - investigate, can we store the data in the text files in a useful sorted for
 The forward_index is just a version of term_freq without the frequencies - so that can be created from the term-term_freq
 Similarly for invert_index and doc_rank?
 
+def order_neutral_list_comparison(list1, list2):
+    return(set(list1) == set(list2))
+    
+print(order_neutral_list_comparison([1,3,5,7,9], [1,5,7,9,9,3]))
+
+for i in set([1,5,7,9,9,3]):
+    
+    print(str(i) + " " + str([1,5,7,9,9,3].count(i)))
+
 
 OK - so start with term_freq. start reading through a file and add each word to a BST - when get to each word in the source doc we check if it already exists, and add it or update date it's frequency count.
 
