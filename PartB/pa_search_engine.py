@@ -121,6 +121,11 @@ def index_file  (filename
     
         # <YOUR-CODE-HERE>      
 
+        # *********************************************
+        # NOTE - before adding new documents, check that it doesn't already exist 1st - that way the count of documents stays correct!!!!!!!!
+        # *********************************************
+
+
         # create a list and a set of words from the text file
         file_content = f.readlines()
         list_of_words = parse_line(file_content)
@@ -201,6 +206,17 @@ def search  (search_phrase
     words = parse_line(search_phrase)
     result = {}
 
-    <YOUR-CODE-HERE>           
+    # <YOUR-CODE-HERE>  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+             
 
     return(sorted_result)
