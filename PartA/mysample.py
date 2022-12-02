@@ -125,6 +125,19 @@ b['frog'].append(a)
 
 
 
+frequency_of_words = {}
+for word in list_of_words:
+    if word in frequency_of_words:
+        frequency_of_words[word] += 1
+    else:
+        frequency_of_words[word] = 1
+
+
+
+
+
+
+
     
 print("\n")
 print(b)

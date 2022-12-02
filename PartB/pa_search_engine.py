@@ -54,7 +54,7 @@ def crawl_folder(folder
     for file in os.scandir(folder):
         if file.is_file():
             total_docs += 1
-            index_file(file.name, file.path, forward_index, invert_index, term_freq, doc_rank)
+            index_file(file.name, file.path, forward_index, invert_index, term_freq, inv_doc_freq, doc_rank)
 
     # with invert_index calculated, we can calculate the inv_doc_freq of each unique word
     # where inv_doc_freq = number of documents with the word / total number of documents
@@ -89,14 +89,18 @@ def parse_line(line):
     """    
     
     list_of_words = []
-    split_up_line = line.split()
+    # print("Line:\n")
+    # print(line)
+    # split_up_line = line.split()
     
-    for word_to_add in split_up_line:
-        # these methods could be chained into one line, but I've left them separate for code readability/maintainability - check timings and briefly mention in report
-        lowercase_word = word_to_add.lower()
-        # stripped_word = word_to_add.strip() check if this step improves the timing?
-        sanitised_word = sanitize_word(lowercase_word)
-        list_of_words.append(sanitised_word)
+    for section_to_add in line:
+        words_from_section = section_to_add.split()
+        for word_to_add in words_from_section:
+            # these methods could be chained into one line, but I've left them separate for code readability/maintainability - check timings and briefly mention in report
+            lowercase_word = word_to_add.lower()
+            # stripped_word = word_to_add.strip() check if this step improves the timing?
+            sanitised_word = sanitize_word(lowercase_word)
+            list_of_words.append(sanitised_word)
     
     return(list_of_words)
 
@@ -127,28 +131,47 @@ def index_file  (filename
 
 
         # create a list and a set of words from the text file
+        start = timer()
         file_content = f.readlines()
         list_of_words = parse_line(file_content)
+        # print("List of words created: " + str(timer() - start))
         set_of_words = set(list_of_words)
-        
+        # print("Set of words created: " + str(timer() - start))
         
         # record the size of the file and record this ad the document rank in doc_rank
-        doc_rank[filename] = len(file_content)
+        total_doc_len = 0
+        for line in file_content:
+            total_doc_len += len(line)
+        doc_rank[filename] = 1 / total_doc_len
         
         # add the set of unique words to forward_index
         forward_index[filename] = list(set_of_words)
+        # print("Forward index created: " + str(timer() - start))
         
         # create an entry in term_freq
         # make a dict of key:values for word:frequency_count
+        frequency_count = 1
         total_number_of_words = len(list_of_words)
         frequency_of_words = {}
-        for word in set_of_words:
-            frequency_count = list_of_words.count(word)
-            frequency_of_words[word] = frequency_count / total_number_of_words
+        freq_count_dict = {}
+        for word in list_of_words:
+            if word in freq_count_dict:
+                freq_count_dict[word] += 1
+            else:
+                freq_count_dict[word] = 1
+            # frequency_count = list_of_words.count(word)
+            # print(word + ": frequency_count created: " + str(timer() - start))
+        # print(freq_count_dict)
+        # print(freq_count_dict['the'])
             
+        for word in freq_count_dict:
+            frequency_of_words[word] = frequency_count / total_number_of_words
+            # print("frequency_of_words[word] created: " + str(timer() - start))
+        # print("frequency_of_words created: " + str(timer() - start))
         # store this new dict in the term_freq dict
         term_freq[filename] = frequency_of_words
-        
+        # term_freq[filename] = freq_count_dict
+        # print("term_freq created: " + str(timer() - start))
         
         # now add the words from set_of_words to invert_index
         for word in set_of_words:
@@ -157,7 +180,7 @@ def index_file  (filename
             if not(filename) in invert_index[word]:
                 invert_index[word].append(filename)
         
-        
+        # print("invert_index created: " + str(timer() - start))
         
         
         # Inverse document frequency (IDF): This is a metric calculated for each unique word encountered, across all documents. It has values between 0 and 1, and is calculated as follows: IDF(word) = Number of documents with word / Total numnber of documents
