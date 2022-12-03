@@ -87,20 +87,17 @@ def parse_line(line):
     HINT: Consider using the "strip()" and "split()" function here
     
     """    
-    
+
     list_of_words = []
-    # print("Line:\n")
-    # print(line)
-    # split_up_line = line.split()
+    split_line = line.split()
+    for word_to_add in split_line:
+        # these methods could be chained into one line, but I've left them separate for code readability/maintainability - check timings and briefly mention in report
+        lowercase_word = word_to_add.lower()
+        # print(lowercase_word)
+        # stripped_word = word_to_add.strip() check if this step improves the timing?
+        sanitised_word = sanitize_word(lowercase_word)
+        list_of_words.append(sanitised_word)
     
-    for section_to_add in line:
-        words_from_section = section_to_add.split()
-        for word_to_add in words_from_section:
-            # these methods could be chained into one line, but I've left them separate for code readability/maintainability - check timings and briefly mention in report
-            lowercase_word = word_to_add.lower()
-            # stripped_word = word_to_add.strip() check if this step improves the timing?
-            sanitised_word = sanitize_word(lowercase_word)
-            list_of_words.append(sanitised_word)
     
     return(list_of_words)
 
@@ -133,7 +130,20 @@ def index_file  (filename
         # create a list and a set of words from the text file
         start = timer()
         file_content = f.readlines()
-        list_of_words = parse_line(file_content)
+        
+        
+        list_of_words = []
+        for line_to_parse in file_content:
+            # split_line = line_to_parse.split()/
+            words_from_line = parse_line(line_to_parse)
+            # print(words_from_line)
+            list_of_words.extend(words_from_line)
+        # print(list_of_words)
+        
+        
+        
+        
+        # list_of_words = parse_line(file_content)
         # print("List of words created: " + str(timer() - start))
         set_of_words = set(list_of_words)
         # print("Set of words created: " + str(timer() - start))
@@ -226,20 +236,83 @@ def search  (search_phrase
     to arrive at a final weight for a given query, for every document. 
     """
     
-    words = parse_line(search_phrase)
+    search_words = parse_line(search_phrase)
+    
+    print(search_words)
+    
     result = {}
+    result_weightings = {}
 
     # <YOUR-CODE-HERE>  
+#     For every document, you can take the product of TF and IDF for each term of the query, and
+# calculate their cumulative product. Then you multiply this value with that documents
+# DocumentRank to arrive at a final weight for a given query, for every document. This weight
+# is then used to sort your results.
     
     
     
+    # take the product of TF and IDF 
+    # for term of the query, and calculate their cumulative product
+    # spec says need to match all terms, so set to zero if one term is missing
     
-    
-    
-    
-    
-    
-    
-             
 
+    # tf =1
+    # idf = 1
+    # for search_word in search_words:
+    #     if search_word in invert_index:
+    #         idf = inv_doc_freq[search_word]
+    #         for doc in invert_index[search_word]:
+    #             tf = term_freq[doc][search_word]
+
+    #     else:
+    #         tf = 0
+    # dr = doc_rank[key]
+    # result_weighting = tf * idf * dr
+    # if result_weighting:
+    #     result_weightings[key] = tf * idf * dr
+    
+    document_list = set(doc_rank)
+    # for every document - calculate the document doc_rank
+    
+    # start by getting list of all docs which have all search terms
+    for search_word in search_words:
+        if search_word in invert_index:
+            search_word_doc_list = set(invert_index[search_word])
+            print(search_word_doc_list)
+            document_list = document_list.intersection(search_word_doc_list)
+            print("Doc list: ")
+            print(len(document_list))
+            print(document_list)
+        else:
+            document_list = set()
+        
+    sorted_result = []
+    if len(document_list):
+        print("In document_list: ")
+        print(len(document_list))
+        print(document_list)
+        for doc in document_list:
+            doc_product = doc_rank[doc]
+            for search_word in search_words:
+                doc_product *= term_freq[doc][search_word]
+                doc_product *= inv_doc_freq[search_word]
+
+            result_weightings[doc_product] = doc
+            
+        result_order = sorted(result_weightings, reverse=True)
+        
+        
+        for result_weighting in result_order:
+            sorted_result.append([result_weightings[result_weighting], result_weighting])
+            
+                
+        
+    
+    
+    
+    
+    print(sorted_result)
+    
+    
+    # sorted_result = result_weighting
     return(sorted_result)
