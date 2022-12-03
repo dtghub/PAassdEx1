@@ -93,11 +93,11 @@ def parse_line(line):
     for word_to_add in split_line:
         # these methods could be chained into one line, but I've left them separate for code readability/maintainability - check timings and briefly mention in report
         lowercase_word = word_to_add.lower()
-        # print(lowercase_word)
+        stripped_word = lowercase_word.strip()
         # stripped_word = word_to_add.strip() check if this step improves the timing?
-        sanitised_word = sanitize_word(lowercase_word)
-        list_of_words.append(sanitised_word)
-    
+        sanitised_word = sanitize_word(stripped_word)
+        if len(sanitised_word) > 0:
+            list_of_words.append(sanitised_word)
     
     return(list_of_words)
 
@@ -134,20 +134,13 @@ def index_file  (filename
         
         list_of_words = []
         for line_to_parse in file_content:
-            # split_line = line_to_parse.split()/
             words_from_line = parse_line(line_to_parse)
-            # print(words_from_line)
-            list_of_words.extend(words_from_line)
-        # print(list_of_words)
-        
-        
-        
-        
-        # list_of_words = parse_line(file_content)
-        # print("List of words created: " + str(timer() - start))
+            if words_from_line != []:
+                list_of_words.extend(words_from_line)
+         
+
         set_of_words = set(list_of_words)
-        # print("Set of words created: " + str(timer() - start))
-        
+              
         # record the size of the file and record this ad the document rank in doc_rank
         total_doc_len = 0
         for line in file_content:
@@ -156,7 +149,6 @@ def index_file  (filename
         
         # add the set of unique words to forward_index
         forward_index[filename] = list(set_of_words)
-        # print("Forward index created: " + str(timer() - start))
         
         # create an entry in term_freq
         # make a dict of key:values for word:frequency_count
@@ -169,19 +161,12 @@ def index_file  (filename
                 freq_count_dict[word] += 1
             else:
                 freq_count_dict[word] = 1
-            # frequency_count = list_of_words.count(word)
-            # print(word + ": frequency_count created: " + str(timer() - start))
-        # print(freq_count_dict)
-        # print(freq_count_dict['the'])
             
         for word in freq_count_dict:
             frequency_of_words[word] = frequency_count / total_number_of_words
-            # print("frequency_of_words[word] created: " + str(timer() - start))
-        # print("frequency_of_words created: " + str(timer() - start))
+
         # store this new dict in the term_freq dict
         term_freq[filename] = frequency_of_words
-        # term_freq[filename] = freq_count_dict
-        # print("term_freq created: " + str(timer() - start))
         
         # now add the words from set_of_words to invert_index
         for word in set_of_words:
@@ -189,8 +174,6 @@ def index_file  (filename
                 invert_index[word] = []
             if not(filename) in invert_index[word]:
                 invert_index[word].append(filename)
-        
-        # print("invert_index created: " + str(timer() - start))
         
         
         # Inverse document frequency (IDF): This is a metric calculated for each unique word encountered, across all documents. It has values between 0 and 1, and is calculated as follows: IDF(word) = Number of documents with word / Total numnber of documents
@@ -205,17 +188,6 @@ def index_file  (filename
             inv_doc_freq[word] = word_index
         
         
-        
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    
         
     
     end = timer()
@@ -238,9 +210,6 @@ def search  (search_phrase
     
     search_words = parse_line(search_phrase)
     
-    print(search_words)
-    
-    result = {}
     result_weightings = {}
 
     # <YOUR-CODE-HERE>  
@@ -249,70 +218,33 @@ def search  (search_phrase
 # DocumentRank to arrive at a final weight for a given query, for every document. This weight
 # is then used to sort your results.
     
-    
-    
-    # take the product of TF and IDF 
-    # for term of the query, and calculate their cumulative product
-    # spec says need to match all terms, so set to zero if one term is missing
-    
-
-    # tf =1
-    # idf = 1
-    # for search_word in search_words:
-    #     if search_word in invert_index:
-    #         idf = inv_doc_freq[search_word]
-    #         for doc in invert_index[search_word]:
-    #             tf = term_freq[doc][search_word]
-
-    #     else:
-    #         tf = 0
-    # dr = doc_rank[key]
-    # result_weighting = tf * idf * dr
-    # if result_weighting:
-    #     result_weightings[key] = tf * idf * dr
-    
-    document_list = set(doc_rank)
-    # for every document - calculate the document doc_rank
-    
-    # start by getting list of all docs which have all search terms
-    for search_word in search_words:
-        if search_word in invert_index:
-            search_word_doc_list = set(invert_index[search_word])
-            print(search_word_doc_list)
-            document_list = document_list.intersection(search_word_doc_list)
-            print("Doc list: ")
-            print(len(document_list))
-            print(document_list)
-        else:
-            document_list = set()
-        
     sorted_result = []
-    if len(document_list):
-        print("In document_list: ")
-        print(len(document_list))
-        print(document_list)
-        for doc in document_list:
-            doc_product = doc_rank[doc]
-            for search_word in search_words:
-                doc_product *= term_freq[doc][search_word]
-                doc_product *= inv_doc_freq[search_word]
+    if search_words:
+        document_list = set(doc_rank)
+        
+        # for every document - calculate the document doc_rank
+        
+        # start by getting list of all docs which have all search terms
+        for search_word in search_words:
+            if search_word in invert_index:
+                search_word_doc_list = set(invert_index[search_word])
+                document_list = document_list.intersection(search_word_doc_list)
+            else:
+                document_list = set()
+            
+        if len(document_list):
+            for doc in document_list:
+                doc_product = doc_rank[doc]
+                for search_word in search_words:
+                    doc_product *= term_freq[doc][search_word]
+                    doc_product *= inv_doc_freq[search_word]
 
-            result_weightings[doc_product] = doc
-            
-        result_order = sorted(result_weightings, reverse=True)
-        
-        
-        for result_weighting in result_order:
-            sorted_result.append([result_weightings[result_weighting], result_weighting])
-            
+                result_weightings[doc_product] = doc
                 
-        
+            result_order = sorted(result_weightings, reverse=True)
+            
+            
+            for result_weighting in result_order:
+                sorted_result.append([result_weightings[result_weighting], result_weighting])
     
-    
-    
-    
-    print(sorted_result)
-    
-    
-    # sorted_result = result_weighting
     return(sorted_result)

@@ -95,7 +95,7 @@ for word in set_of_words:
         invert_index[word].append(filename)
 
 
-set_of_words = {"apple", "banana", "cherry", "orange", "cherry", "pear", "slug"}
+set_of_words = {"apple", "banana", "cherry", "orange", "cherry", "pear", "slug", ""}
 
 for word in set_of_words:
     if not(word) in invert_index:
@@ -104,8 +104,10 @@ for word in set_of_words:
         invert_index[word].append(filename)
 
 
-
-print(invert_index)
+print("Set of words")
+print(set_of_words)
+print("\nList of set of words")
+print(list(set_of_words))
 
 inv_doc_freq = {}
 total_num_docs = len(invert_index)
