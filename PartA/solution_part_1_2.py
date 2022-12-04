@@ -1,4 +1,6 @@
 import sys
+from timeit import default_timer as timer
+import os
 
 #%%----------------------------------------------------------------------------
 
@@ -89,7 +91,36 @@ def MERGESORT(A, start, end):
 
 
 
+#%%----------------------------------------------------------------------------
 
+def TimeSortingAlgo(algo, file):
+    
+    # print(algos)
+    
+    with open(file, 'r', encoding="utf-8") as f:
+        
+        input_file = f.readlines()
+    
+    
+    A = []
+    for line in input_file:
+        A.append(int(line))
+    
+    list_start = 0
+    list_end = len(A) - 1
+    
+    start = timer()
+    
+    algo(A, list_start, list_end)
+    
+    end = timer()
+    
+    return end - start
+    
+    
+    
+    
+    
 
 
 #%%----------------------------------------------------------------------------
