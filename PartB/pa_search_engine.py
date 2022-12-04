@@ -152,7 +152,6 @@ def index_file  (filename
         
         # create an entry in term_freq
         # make a dict of key:values for word:frequency_count
-        frequency_count = 1
         total_number_of_words = len(list_of_words)
         frequency_of_words = {}
         freq_count_dict = {}
@@ -163,7 +162,7 @@ def index_file  (filename
                 freq_count_dict[word] = 1
             
         for word in freq_count_dict:
-            frequency_of_words[word] = frequency_count / total_number_of_words
+            frequency_of_words[word] = freq_count_dict[word] / total_number_of_words
 
         # store this new dict in the term_freq dict
         term_freq[filename] = frequency_of_words
@@ -180,14 +179,12 @@ def index_file  (filename
         
         # use invert_index
         
-        total_num_docs = len(invert_index)
+        total_num_docs = len(doc_rank)
         
         for word in invert_index:
             doc_count = len(invert_index[word])
             word_index = doc_count / total_num_docs
             inv_doc_freq[word] = word_index
-        
-        
         
     
     end = timer()
