@@ -57,12 +57,13 @@ def INSERTIONSORT(A, start, end):
 
 def MERGE(A, start, mid, end):
     LEFT = A[start:mid]
-    RIGHT = A[mid + 1:end]
+    RIGHT = A[mid:end]
     
     sentinel = sys.maxsize
     LEFT.append(sentinel)
     RIGHT.append(sentinel)
     
+    ti = 0
     li = 0
     ri = 0
     
@@ -78,11 +79,13 @@ def MERGE(A, start, mid, end):
 
 
 def MERGESORT(A, start, end):
+    # print(A)
     if start < end:
-        mid = (start + end) /2
+        mid = (start + end) // 2
+        # print(mid)
         MERGESORT(A, start, mid)
         MERGESORT(A, mid + 1, end)
-        MERGE(A, start, mid, end)
+        MERGE(A, start, mid + 1, end + 1)
 
 
 
