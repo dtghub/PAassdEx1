@@ -48,9 +48,7 @@ def INSERTIONSORT(A, start, end):
         key = A[outer]
         inner = outer
         while inner > 0 and A[inner - 1] > key:
-            # temp = A[inner]
             A[inner] = A[inner - 1]
-            # A[inner - 1] = temp
             inner -= 1
         A[inner] = key
             
@@ -58,6 +56,7 @@ def INSERTIONSORT(A, start, end):
 #%%----------------------------------------------------------------------------
 
 def MERGE(A, start, mid, end):
+    sys.setrecursionlimit(2000)
     LEFT = A[start:mid]
     RIGHT = A[mid:end]
     
@@ -84,7 +83,6 @@ def MERGESORT(A, start, end):
     # print(A)
     if start < end:
         mid = (start + end) // 2
-        # print(mid)
         MERGESORT(A, start, mid)
         MERGESORT(A, mid + 1, end)
         MERGE(A, start, mid + 1, end + 1)
