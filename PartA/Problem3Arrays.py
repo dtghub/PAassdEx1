@@ -18,128 +18,93 @@
 
 
 
-class NodeDoublyLinkedList:
         
-    def __init__(self, key = 0):
-        self.key = key
-        self.prv = None
-        self.nxt = None
-    
-    
-    def get_key(self):
-        return (self.key)
-    
-    def set_key(self, key):
-        self.key = key
-        
-    def get_next(self):
-        return (self.nxt)
-        
-    def set_next(self, nxt):
-        self.nxt = nxt
-        
-    def get_prev(self):
-        return (self.prv)
-        
-    def set_prev(self, prv):
-        self.prv = prv
-        
-        
-class DoublyLinkedList:
+class DynamicSet_Array:
         
     def __init__(self):
-        self.head = None
+        self.max_array_list_size = 100
+        self.array_list = [None]*self.max_array_list_size
+        self.array_list_size = 0
         print("hello")
 
 
 
-    #add (insert) a node object at the head, if the key doesn't already exist.Return new node, or Null if already exists
+    #add an element at the end, if the key doesn't already exist. Return position index of key, or None if add operation failed.
     def add(self, key):
-        node = None
-        isAlreadyExists = self.is_element(key)
-        if not(isAlreadyExists):
-            node = NodeDoublyLinkedList(key)
+        
+        key_position = self.is_element(key)
+        if key_position == None and self.array_list_size < self.max_array_list_size:
             
-            if self.set_empty():
-                node.set_next(None)
-            else:
-                node.set_next(self.head)
-                self.head.set_prev(node)
-                
-            node.set_prev(None)
-            self.head = node    
-        return node
+            self.array_list[self.array_list_size] = key
+            key_position = self.array_list_size
+            self.array_list_size += 1
+
+        return key_position
                
         
     
-    #use is_element to find node to remove. Return removed node, or Null if not found
+    #use is_element to find key to remove. Return removed position index, or None if not found
     def remove(self, key):
-        node = self.is_element(key)
-        if node:
-            nextNode = node.get_next()
-            prevNode = node.get_prev()
-            nextNode.set_prev(prevNode)
-            prevNode.set_next(nextNode)
-        return node
+        key_position = self.is_element(key)
+        if key_position != None:
+            self.array_list = self.array_list[:key_position] + self.array_list[key_position + 1:]
+            self.array_list_size -= 1
+        return key_position
         
 
-    #search for a given key in the linked list, returns the node if found, None if not found
-    def is_element(self,key):
-        node = self.head
-        while node != None and node.get_key() != key:
-            node = node.get_next()
-        return node    
+    #search for a given key in the array, returns the position index if found, None if not found
+    def is_element(self, key):
+        key_found = None
+        i = 0
+        while i < self.array_list_size and key_found == None:
+            if self.array_list[i] == key:
+                key_found = i
+            i += 1
+            
+        return key_found    
     
     
-    # checks if linked list is empty
+    # checks if array is empty
     def set_empty(self):
-        if self.head == None:
+        if self.array_list_size == 0:
             return True
         else:
             return False
 
 
-    #returns the number of nodes in the linked list
+    #returns the number of elements in the array
     def set_size(self):
-        node = self.head
-        count = 0
-        while node != None:
-            count += 1
-            node = node.get_next()
-        return (count)
+        return (self.array_list_size)
 
 
     #iterate through the entire linked list and print all keys
     def print_all_keys(self):
-        node = self.head
-        while node != None:
-            key = node.get_key()
-            print(key)
-            node = node.get_next()
+        for i in range(self.array_list_size):
+            print(self.array_list[i])
         
 
 
 
     
-list = DoublyLinkedList()
+list = ArrayList()
 print(list.set_empty())
-print('Adding 6:' + str(list.add(6).get_key()))
-print('Adding 7:' + str(list.add(7).get_key()))
-print('Adding 61:' + str(list.add(61).get_key()))
-print('Adding 620:' + str(list.add(620).get_key()))
+print('Adding 6:' + str(list.add(6)))
+print('Adding 7:' + str(list.add(7)))
+print('Adding 61:' + str(list.add(61)))
+print('Adding 620:' + str(list.add(620)))
 print('Adding 6:' + str(list.add(6)))
 
 print("Searching for 6")
 foundkey = list.is_element(6)
-if foundkey:
-    print(foundkey.key)
+if foundkey != None:
+    print(foundkey)
 else:
     print("Not found!")
     
 print("Searching for 8")
 foundkey = list.is_element(8)
-if foundkey:
-    print(foundkey.key)
+if foundkey != None:
+    print(foundkey)
 else:
     print("Not found!")
 
