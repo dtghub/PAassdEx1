@@ -1,3 +1,7 @@
+from timeit import default_timer as timer
+import random
+
+
 # Problem 3 [10 marks]
 # The Dynamic Set is an abstract data type (ADT) that can store distinct elements, without any
 # particular order. As opposed to static or frozen sets, dynamic sets allow insertion and deletion
@@ -16,15 +20,6 @@
 # a) A doubly linked list.
 # b) A static array implementation (size of array may be picked arbitrarily)
 
-
-
-#I think this is what is expected for arrays (of size N) - need to check!!!!
-
-
-
-N = 1000
-import array as arr
-myarray = arr.array('i', [0] * N)
 
 
 
@@ -200,7 +195,72 @@ class DynamicSet_Array:
 
 
 
+
+class compare_ADT_implementations:
     
+    def __init__(self, file):
+        self.file = file
+    
+    
+    def main(self):
+        
+        with open(self.file, 'r', encoding="utf-8") as f:
+            
+            input_file = f.readlines()
+        
+        
+        A = []
+        for line in input_file:
+            A.append(int(line))
+            
+        # S = set(A)
+        
+        
+        R = []
+        
+        for i in range(100):
+            R.append(random.randint(0, 49999))
+
+
+        linked_list_ADT = DynamicSet_LinkedList()
+        
+        for list_element in A:
+            linked_list_ADT.add(list_element)
+        
+        
+        
+        
+        list_start = 0
+        list_end = len(A) - 1
+        
+        start = timer()
+        
+        # algo(A, list_start, list_end)
+        
+        end = timer()
+        
+        return end - start
+
+
+class MainEntry:
+    def main(self):
+        print("You have reached the 'main()' function, please leave a message after the tone...")
+
+        comparison_code = compare_ADT_implementations('int20k.txt')
+        result = comparison_code.main()
+
+
+
+    def __init__(self):
+        print("Howdy!!!")
+        # self.main()
+
+
+
+
+test_count = MainEntry()
+test_count.main()
+
 # list = DoublyLinkedList()
 # print(list.set_empty())
 # print('Adding 6:' + str(list.add(6).get_key()))

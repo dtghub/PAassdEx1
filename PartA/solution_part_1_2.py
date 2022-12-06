@@ -93,8 +93,6 @@ def MERGESORT(A, start, end):
 
 def TimeSortingAlgo(algo, file):
     
-    # print(algos)
-    
     with open(file, 'r', encoding="utf-8") as f:
         
         input_file = f.readlines()
