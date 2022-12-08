@@ -162,7 +162,7 @@ class DynamicSet_Array:
         return key_position != None
         
 
-    #search for a given key in the array, returns the position index + 1 if found, None if not found
+    #search for a given key in the array, returns the (position index + 1) if found, None if not found
     def is_element(self, key):
         key_found = None
         i = 0
@@ -213,7 +213,7 @@ class compare_ADT_implementations:
         for line in input_file:
             A.append(int(line))
             
-        # S = set(A)
+        report = []
         
         
         R = []
@@ -222,13 +222,54 @@ class compare_ADT_implementations:
             R.append(random.randint(0, 49999))
 
 
+        # time taken to execute is_element(S,x),
+
         linked_list_ADT = DynamicSet_LinkedList()
+        node = NodeDoublyLinkedList
+        report.append("Results for Linked-list based implementation\n")
         
         for list_element in A:
             linked_list_ADT.add(list_element)
         
-        
-        
+        for random_element in R:
+            start = timer()
+            result_of_is_element = linked_list_ADT.is_element(random_element)
+            end = timer()
+            if result_of_is_element == None:
+                print("Random element not found: ",result_of_is_element)
+            else:
+                print("Random element found: ", node.get_key(result_of_is_element))
+                if random_element == node.get_key(result_of_is_element) and random_element in A:
+                    print("^^Correct!")
+            print("In: ", str(end - start), " seconds!")
+            report.append(str(end - start) + "\n")
+                    
+                    
+                    
+        print("\nNow for the Array version!!!!\n\n")
+        array_ADT = DynamicSet_Array(20000)
+        report.append("Results for Array based implementation\n")
+                
+        for list_element in A:
+            array_ADT.add(list_element)
+    
+        for random_element in R:
+            start = timer()
+            result_of_is_element = array_ADT.is_element(random_element)
+            end = timer()
+            if result_of_is_element == None:
+                print("Random element not found: ",result_of_is_element)
+            else:
+                element_is = array_ADT.array_list[result_of_is_element - 1]
+                print("Random element found: ", str(element_is))
+                if random_element == element_is and element_is in A:
+                    print("^^Correct!")
+            print("In: ", str(end - start), " seconds!")
+            report.append(str(end - start) + "\n")
+            
+        print(report)
+        with open('results_problem4.txt', 'w') as f:
+            f.writelines(report)
         
         list_start = 0
         list_end = len(A) - 1
