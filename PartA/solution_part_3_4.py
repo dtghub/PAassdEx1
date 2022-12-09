@@ -226,7 +226,7 @@ class compare_ADT_implementations:
 
         linked_list_ADT = DynamicSet_LinkedList()
         node = NodeDoublyLinkedList
-        report.append("Results for Linked-list based implementation\n")
+        report.append("Results for Linked-list based implementation")
         
         for list_element in A:
             linked_list_ADT.add(list_element)
@@ -235,20 +235,11 @@ class compare_ADT_implementations:
             start = timer()
             result_of_is_element = linked_list_ADT.is_element(random_element)
             end = timer()
-            if result_of_is_element == None:
-                print("Random element not found: ",result_of_is_element)
-            else:
-                print("Random element found: ", node.get_key(result_of_is_element))
-                if random_element == node.get_key(result_of_is_element) and random_element in A:
-                    print("^^Correct!")
-            print("In: ", str(end - start), " seconds!")
-            report.append(str(end - start) + "\n")
+            report.append(str(end - start))
                     
-                    
-                    
-        print("\nNow for the Array version!!!!\n\n")
+
         array_ADT = DynamicSet_Array(20000)
-        report.append("Results for Array based implementation\n")
+        report.append("Results for Array based implementation")
                 
         for list_element in A:
             array_ADT.add(list_element)
@@ -257,77 +248,45 @@ class compare_ADT_implementations:
             start = timer()
             result_of_is_element = array_ADT.is_element(random_element)
             end = timer()
-            if result_of_is_element == None:
-                print("Random element not found: ",result_of_is_element)
-            else:
-                element_is = array_ADT.array_list[result_of_is_element - 1]
-                print("Random element found: ", str(element_is))
-                if random_element == element_is and element_is in A:
-                    print("^^Correct!")
-            print("In: ", str(end - start), " seconds!")
-            report.append(str(end - start) + "\n")
+            report.append(str(end - start))
             
-        print(report)
+ 
+        link_list_sum = 0
+        for i in range(1,101):
+            link_list_sum += float(report[i])
+       
+                
+        timing_string = str(link_list_sum/100)
+        print("Linked list mean time for 100 searches:", timing_string, "milliseconds")
+            
+            
+        array_sum = 0
+        for i in range(102,202):
+            array_sum += float(report[i])
+        
+        timing_string = str(array_sum/100)
+        print("Array mean time for 100 searches:", timing_string, "milliseconds")
+        
+        
+        for i in range(len(report)):
+            report[i] += "\n"
+        
+        
         with open('results_problem4.txt', 'w') as f:
             f.writelines(report)
         
-        list_start = 0
-        list_end = len(A) - 1
-        
-        start = timer()
-        
-        # algo(A, list_start, list_end)
-        
-        end = timer()
-        
-        return end - start
 
 
 class MainEntry:
     def main(self):
-        print("You have reached the 'main()' function, please leave a message after the tone...")
-
         comparison_code = compare_ADT_implementations('int20k.txt')
-        result = comparison_code.main()
+        comparison_code.main()
 
 
 
-    def __init__(self):
-        print("Howdy!!!")
-        # self.main()
 
 
 
 
 test_count = MainEntry()
 test_count.main()
-
-# list = DoublyLinkedList()
-# print(list.set_empty())
-# print('Adding 6:' + str(list.add(6).get_key()))
-# print('Adding 7:' + str(list.add(7).get_key()))
-# print('Adding 61:' + str(list.add(61).get_key()))
-# print('Adding 620:' + str(list.add(620).get_key()))
-# print('Adding 6:' + str(list.add(6)))
-
-# print("Searching for 6")
-# foundkey = list.is_element(6)
-# if foundkey:
-#     print(foundkey.key)
-# else:
-#     print("Not found!")
-    
-# print("Searching for 8")
-# foundkey = list.is_element(8)
-# if foundkey:
-#     print(foundkey.key)
-# else:
-#     print("Not found!")
-
-# print("Size: " + str(list.set_size()))
-# list.print_all_keys()
-# print(list.set_empty())
-
-
-
-
