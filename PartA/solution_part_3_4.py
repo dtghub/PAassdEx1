@@ -2,7 +2,7 @@ from timeit import default_timer as timer
 import random
 
 
-# Although the timings are similar, The Array-based implementation behaves slightly faster.
+# Although the timings are similar, The Array-based implementation behaves faster, by around 30% on average.
 
 # There is perhaps fewer processing steps involved in moving from one element to the next in the array based version, where it is likely that the starting address of each array element in memory is mostly a calculated value, versus having to retrieve and resolve the pointer to each 'next' element when seeking through the linked list.
 
