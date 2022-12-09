@@ -2,23 +2,9 @@ from timeit import default_timer as timer
 import random
 
 
-# Problem 3 [10 marks]
-# The Dynamic Set is an abstract data type (ADT) that can store distinct elements, without any
-# particular order. As opposed to static or frozen sets, dynamic sets allow insertion and deletion
-# of elements. That is, they are mutable. There are five main operations in the ADT:
-# •
-# •
-# •
-# •
-# •
-# add(S,x): add element x to S, if it is not present already
-# remove(S,x): remove element x from S, if it is present
-# is_element(S,x): check whether element x is in set S
-# set_empty(S): check whether set S has no elements
-# set_size(S): return the number of elements of set S
-# Implement in Python1 the Dynamic Set ADT defined above using
-# a) A doubly linked list.
-# b) A static array implementation (size of array may be picked arbitrarily)
+# Although the timings are similar, The Array-based implementation behaves slightly faster.
+
+# There is perhaps fewer processing steps involved in moving from one element to the next in the array based version, where it is likely that the starting address of each array element in memory is mostly a calculated value, versus having to retrieve and resolve the pointer to each 'next' element when seeking through the linked list.
 
 
 
