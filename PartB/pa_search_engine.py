@@ -54,7 +54,7 @@ def crawl_folder(folder
     for file in os.scandir(folder):
         if file.is_file():
             total_docs += 1
-            index_file(file.name, file.path, forward_index, invert_index, term_freq, inv_doc_freq, doc_rank)
+            index_file(file.name, file.path, forward_index, invert_index, term_freq, doc_rank)
 
     # with invert_index calculated, we can calculate the inv_doc_freq of each unique word
     # where inv_doc_freq = number of documents with the word / total number of documents
@@ -107,7 +107,6 @@ def index_file  (filename
                 ,forward_index
                 ,invert_index
                 ,term_freq
-                ,inv_doc_freq
                 ,doc_rank
                 ):
     """    
@@ -155,6 +154,12 @@ def index_file  (filename
         total_number_of_words = len(list_of_words)
         frequency_of_words = {}
         freq_count_dict = {}
+
+        #frequency_of_words = {}
+        #for word in set_of_words2:
+            #frequency_count = list_of_words.count(word)
+            #frequency_of_words[word] = frequency_count / total_number_of_words
+
         for word in list_of_words:
             if word in freq_count_dict:
                 freq_count_dict[word] += 1
@@ -173,18 +178,6 @@ def index_file  (filename
                 invert_index[word] = []
             if not(filename) in invert_index[word]:
                 invert_index[word].append(filename)
-        
-        
-        # Inverse document frequency (IDF): This is a metric calculated for each unique word encountered, across all documents. It has values between 0 and 1, and is calculated as follows: IDF(word) = Number of documents with word / Total numnber of documents
-        
-        # use invert_index
-        
-        total_num_docs = len(doc_rank)
-        
-        for word in invert_index:
-            doc_count = len(invert_index[word])
-            word_index = doc_count / total_num_docs
-            inv_doc_freq[word] = word_index
         
     
     end = timer()
