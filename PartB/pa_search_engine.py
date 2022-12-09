@@ -238,7 +238,17 @@ def search  (search_phrase
 
                 result_weightings[doc_product] = doc
                 
-            result_order = sorted(result_weightings, reverse=True)
+            # sort the weightings using bubble sort from partA
+            result_order = list(result_weightings)
+            end = len(result_weightings) - 1
+            for outer in range(end, -1, -1):
+                for i in range(0, outer):
+                    if float(result_order[i]) < float(result_order[i+1]):
+                        temp = result_order[i]
+                        result_order[i] = result_order[i + 1]
+                        result_order[i + 1] = temp
+
+            # result_order = sorted(result_weightings, reverse=True)
             
             
             for result_weighting in result_order:
